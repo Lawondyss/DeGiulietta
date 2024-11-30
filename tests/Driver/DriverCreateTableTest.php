@@ -10,11 +10,14 @@ use Lawondyss\DeGiulietta\Migration;
 use Lawondyss\DeGiulietta\Table\Table;
 use Tester\Assert;
 
-require __DIR__ . '/bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 function migration(): Migration
 {
-  return new class ( new Driver ) extends Migration { };
+  return new class ( new Driver ) extends Migration {
+    public function up(): void {}
+    public function down(): void {}
+  };
 }
 
 test('DROP COLUMN', function (): void {

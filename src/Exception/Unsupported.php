@@ -14,4 +14,10 @@ class Unsupported extends DeGiuliettaException
   {
     return new self("Unsupported value type, given {$given}");
   }
+
+
+  public static function engine(string $given): self
+  {
+    return new self("Unsupported engine {$given}");
+  }
 }

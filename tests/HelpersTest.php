@@ -1,6 +1,5 @@
 <?php
 
-use Lawondyss\DeGiulietta\Exception\DeGiuliettaException;
 use Lawondyss\DeGiulietta\Helpers;
 use Tester\Assert;
 
@@ -17,14 +16,14 @@ test('isInRange inclusive', function (): void {
 });
 
 test('getVarType', function (): void {
-  Assert::same(Helpers::VAR_TYPE_STRING, Helpers::getVarType(''));
-  Assert::same(Helpers::VAR_TYPE_INT, Helpers::getVarType(0));
-  Assert::same(Helpers::VAR_TYPE_FLOAT, Helpers::getVarType(0.0));
-  Assert::same(Helpers::VAR_TYPE_BOOL, Helpers::getVarType(false));
+  Assert::same(Helpers::VAR_TYPE_STRING, Helpers::getVarType(''), 'string');
+  Assert::same(Helpers::VAR_TYPE_INT, Helpers::getVarType(0), 'int');
+  Assert::same(Helpers::VAR_TYPE_FLOAT, Helpers::getVarType(0.0), 'float');
+  Assert::same(Helpers::VAR_TYPE_BOOL, Helpers::getVarType(false), 'bool');
+  Assert::same(Helpers::VAR_TYPE_NULL, Helpers::getVarType(null), 'null');
 });
 
 test('getVarType not allowed', function (): void {
-  Assert::null(Helpers::getVarType(null), 'null');
   Assert::null(Helpers::getVarType([]), 'array');
   Assert::null(Helpers::getVarType(new stdClass), 'class instance');
   Assert::null(Helpers::getVarType(new class extends stdClass {}), 'anonymous class instance');
@@ -61,4 +60,10 @@ test('stringLength', function (): void {
 test('stringLength UTF', function (): void {
   Assert::same(3, Helpers::stringLength('čáp'));
   Assert::same(3, Helpers::stringLength('ČÁp'));
+});
+
+test('splitColumns', function (): void {
+  Assert::same(['foo', 'bar'], Helpers::splitColumns('`foo`,`bar`'));
+  Assert::same(['foo', 'bar'], Helpers::splitColumns('foo,bar'));
+  Assert::same(['foo'], Helpers::splitColumns('`foo`'));
 });

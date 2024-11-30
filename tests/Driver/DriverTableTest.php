@@ -5,10 +5,18 @@ use Lawondyss\DeGiulietta\Migration;
 use Lawondyss\DeGiulietta\Table\Table;
 use Tester\Assert;
 
-require __DIR__ . '/bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
+
+function migration(): Migration
+{
+  return new class ( new Driver ) extends Migration {
+    public function up(): void {}
+    public function down(): void {}
+  };
+}
 
 test('CREATE TABLE', function (): void {
-  $mig = new class ( new Driver ) extends Migration { };
+  $mig = migration();
   $table = $mig->createTable('t');
   Assert::type(Table::class, $table);
   Assert::with($mig, function(): void {
@@ -17,7 +25,7 @@ test('CREATE TABLE', function (): void {
 });
 
 test('ALTER TABLE', function (): void {
-  $mig = new class ( new Driver ) extends Migration { };
+  $mig = migration();
   $table = $mig->alterTable('t');
   Assert::type(Table::class, $table);
   Assert::with($mig, function(): void {
@@ -26,7 +34,7 @@ test('ALTER TABLE', function (): void {
 });
 
 test('DROP TABLE', function (): void {
-  $mig = new class ( new Driver ) extends Migration { };
+  $mig = migration();
   $mig->dropTable('t');
   Assert::with($mig, function(): void {
     Assert::same(['DROP TABLE `t`;'], $this->tablesStatements());
@@ -34,7 +42,7 @@ test('DROP TABLE', function (): void {
 });
 
 test('TRUNCATE TABLE', function (): void {
-  $mig = new class ( new Driver ) extends Migration { };
+  $mig = migration();
   $mig->truncateTable('t');
   Assert::with($mig, function(): void {
     Assert::same(['TRUNCATE TABLE `t`;'], $this->tablesStatements());
@@ -42,7 +50,7 @@ test('TRUNCATE TABLE', function (): void {
 });
 
 test('RENAME TABLE', function (): void {
-  $mig = new class ( new Driver ) extends Migration { };
+  $mig = migration();
   $mig->renameTable('t1', 't2');
   Assert::with($mig, function(): void {
     Assert::same(['RENAME TABLE `t1` TO `t2`;'], $this->tablesStatements());

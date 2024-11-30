@@ -29,9 +29,9 @@ readonly class DataType
     }
 
     return new self(
-      'CHAR',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default, Allowed::Collation),
+      name: 'CHAR',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default, Allowed::Collation),
       size: $length,
     );
   }
@@ -44,9 +44,9 @@ readonly class DataType
     }
 
     return new self(
-      'VARCHAR',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default, Allowed::Collation),
+      name: 'VARCHAR',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default, Allowed::Collation),
       size: $length,
     );
   }
@@ -59,9 +59,9 @@ readonly class DataType
     }
 
     return new self(
-      'BINARY',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default, Allowed::Collation),
+      name: 'BINARY',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default, Allowed::Collation),
       size: $length,
     );
   }
@@ -74,9 +74,9 @@ readonly class DataType
     }
 
     return new self(
-      'VARBINARY',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default, Allowed::Collation),
+      name: 'VARBINARY',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default, Allowed::Collation),
       size: $length,
     );
   }
@@ -85,9 +85,9 @@ readonly class DataType
   public static function tinyText(): self
   {
     return new self(
-      'TINYTEXT',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'TINYTEXT',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -95,9 +95,9 @@ readonly class DataType
   public static function text(): self
   {
     return new self(
-      'TEXT',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'TEXT',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -105,9 +105,9 @@ readonly class DataType
   public static function mediumText(): self
   {
     return new self(
-      'MEDIUMTEXT',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'MEDIUMTEXT',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -115,9 +115,9 @@ readonly class DataType
   public static function longText(): self
   {
     return new self(
-      'LONGTEXT',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'LONGTEXT',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -125,9 +125,9 @@ readonly class DataType
   public static function tinyBlob(): self
   {
     return new self(
-      'TINYBLOB',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'TINYBLOB',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -135,9 +135,9 @@ readonly class DataType
   public static function blob(): self
   {
     return new self(
-      'BLOB',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'BLOB',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -145,9 +145,9 @@ readonly class DataType
   public static function mediumBlob(): self
   {
     return new self(
-      'MEDIUMBLOB',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'MEDIUMBLOB',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -155,9 +155,9 @@ readonly class DataType
   public static function longBlob(): self
   {
     return new self(
-      'LONGBLOB',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'LONGBLOB',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -167,9 +167,9 @@ readonly class DataType
     array_unshift($values, $value);
 
     return new self(
-      'ENUM',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default, Allowed::Collation),
+      name: 'ENUM',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default, Allowed::Collation),
       values: $values,
     );
   }
@@ -180,9 +180,9 @@ readonly class DataType
     array_unshift($values, $value);
 
     return new self(
-      'SET',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default, Allowed::Collation),
+      name: 'SET',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default, Allowed::Collation),
       values: $values,
     );
   }
@@ -191,9 +191,9 @@ readonly class DataType
   public static function json(): self
   {
     return new self(
-      'JSON',
-      null,
-      Allowed::new(Allowed::Collation),
+      name: 'JSON',
+      defaultType: null,
+      allowed: Allowed::new(Allowed::Collation),
     );
   }
 
@@ -203,9 +203,9 @@ readonly class DataType
   public static function bool(): self
   {
     return new self(
-      'BOOL',
-      Helpers::VAR_TYPE_BOOL,
-      Allowed::new(Allowed::Default),
+      name: 'BOOL',
+      defaultType: Helpers::VAR_TYPE_BOOL,
+      allowed: Allowed::new(Allowed::Default),
     );
   }
 
@@ -217,9 +217,9 @@ readonly class DataType
     }
 
     return new self(
-      'BIT',
-      Helpers::VAR_TYPE_INT,
-      Allowed::new(Allowed::Default, Allowed::AutoIncrement),
+      name: 'BIT',
+      defaultType: Helpers::VAR_TYPE_INT,
+      allowed: Allowed::new(Allowed::Default, Allowed::AutoIncrement),
       size: $size,
     );
   }
@@ -228,9 +228,9 @@ readonly class DataType
   public static function tinyInt(bool $unsigned = false): self
   {
     return new self(
-      'TINYINT',
-      Helpers::VAR_TYPE_INT,
-      Allowed::new(Allowed::Default, Allowed::AutoIncrement),
+      name: 'TINYINT',
+      defaultType: Helpers::VAR_TYPE_INT,
+      allowed: Allowed::new(Allowed::Default, Allowed::AutoIncrement),
       unsigned: $unsigned,
     );
   }
@@ -239,9 +239,9 @@ readonly class DataType
   public static function smallInt(bool $unsigned = false): self
   {
     return new self(
-      'SMALLINT',
-      Helpers::VAR_TYPE_INT,
-      Allowed::new(Allowed::Default, Allowed::AutoIncrement),
+      name: 'SMALLINT',
+      defaultType: Helpers::VAR_TYPE_INT,
+      allowed: Allowed::new(Allowed::Default, Allowed::AutoIncrement),
       unsigned: $unsigned,
     );
   }
@@ -250,9 +250,9 @@ readonly class DataType
   public static function mediumInt(bool $unsigned = false): self
   {
     return new self(
-      'MEDIUMINT',
-      Helpers::VAR_TYPE_INT,
-      Allowed::new(Allowed::Default, Allowed::AutoIncrement),
+      name: 'MEDIUMINT',
+      defaultType: Helpers::VAR_TYPE_INT,
+      allowed: Allowed::new(Allowed::Default, Allowed::AutoIncrement),
       unsigned: $unsigned,
     );
   }
@@ -261,9 +261,9 @@ readonly class DataType
   public static function int(bool $unsigned = false): self
   {
     return new self(
-      'INT',
-      Helpers::VAR_TYPE_INT,
-      Allowed::new(Allowed::Default, Allowed::AutoIncrement),
+      name: 'INT',
+      defaultType: Helpers::VAR_TYPE_INT,
+      allowed: Allowed::new(Allowed::Default, Allowed::AutoIncrement),
       unsigned: $unsigned,
     );
   }
@@ -272,9 +272,9 @@ readonly class DataType
   public static function bigInt(bool $unsigned = false): self
   {
     return new self(
-      'BIGINT',
-      Helpers::VAR_TYPE_INT,
-      Allowed::new(Allowed::Default, Allowed::AutoIncrement),
+      name: 'BIGINT',
+      defaultType: Helpers::VAR_TYPE_INT,
+      allowed: Allowed::new(Allowed::Default, Allowed::AutoIncrement),
       unsigned: $unsigned,
     );
   }
@@ -287,9 +287,9 @@ readonly class DataType
     }
 
     return new self(
-      'FLOAT',
-      Helpers::VAR_TYPE_FLOAT,
-      Allowed::new(Allowed::Default, Allowed::AutoIncrement),
+      name: 'FLOAT',
+      defaultType: Helpers::VAR_TYPE_FLOAT,
+      allowed: Allowed::new(Allowed::Default, Allowed::AutoIncrement),
       precision: $totalOfDigits,
     );
   }
@@ -310,9 +310,9 @@ readonly class DataType
     }
 
     return new self(
-      'DECIMAL',
-      Helpers::VAR_TYPE_FLOAT,
-      Allowed::new(Allowed::Default, Allowed::AutoIncrement),
+      name: 'DECIMAL',
+      defaultType: Helpers::VAR_TYPE_FLOAT,
+      allowed: Allowed::new(Allowed::Default, Allowed::AutoIncrement),
       precision: $totalOfDigits,
       scale: $numberOfDecimals,
     );
@@ -324,9 +324,9 @@ readonly class DataType
   public static function year(): self
   {
     return new self(
-      'YEAR',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default),
+      name: 'YEAR',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default),
     );
   }
 
@@ -334,9 +334,9 @@ readonly class DataType
   public static function date(): self
   {
     return new self(
-      'DATE',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default),
+      name: 'DATE',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default),
     );
   }
 
@@ -348,9 +348,9 @@ readonly class DataType
     }
 
     return new self(
-      'DATETIME',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default),
+      name: 'DATETIME',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default),
       fsp: $fractionalSecondsPrecision,
     );
   }
@@ -363,9 +363,9 @@ readonly class DataType
     }
 
     return new self(
-      'TIME',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default),
+      name: 'TIME',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default),
       fsp: $fractionalSecondsPrecision,
     );
   }
@@ -378,9 +378,9 @@ readonly class DataType
     }
 
     return new self(
-      'TIMESTAMP',
-      Helpers::VAR_TYPE_STRING,
-      Allowed::new(Allowed::Default),
+      name: 'TIMESTAMP',
+      defaultType: Helpers::VAR_TYPE_STRING,
+      allowed: Allowed::new(Allowed::Default),
       fsp: $fractionalSecondsPrecision,
     );
   }

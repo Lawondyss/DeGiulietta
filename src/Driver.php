@@ -12,7 +12,6 @@ use Lawondyss\DeGiulietta\ForeignKey\DropForeignKeyAction;
 use Lawondyss\DeGiulietta\Index\DefineIndexAction;
 use Lawondyss\DeGiulietta\Index\DropIndexAction;
 use Lawondyss\DeGiulietta\Index\DropPrimaryIndexAction;
-use Lawondyss\DeGiulietta\Index\IndexAction;
 use Lawondyss\DeGiulietta\Index\RenameIndexAction;
 use Lawondyss\DeGiulietta\Table\DefineTableAction;
 use Lawondyss\DeGiulietta\Table\DropTableAction;
@@ -20,20 +19,25 @@ use Lawondyss\DeGiulietta\Table\RenameTableAction;
 use Lawondyss\DeGiulietta\Table\TableAction;
 use Lawondyss\DeGiulietta\Table\TruncateTableAction;
 use function array_map;
-use function dumpe;
 use function implode;
 use function sprintf;
 
 class Driver
 {
-  protected const StringQuote = '"';
-  protected const NameQuote = '`';
-  protected const SchemaDelimiter = '.';
+  protected const string StringQuote = '"';
+  protected const string NameQuote = '`';
+  protected const string SchemaDelimiter = '.';
 
 
   public static function CurrentTimestamp(): Expression
   {
     return new Expression('CURRENT_TIMESTAMP');
+  }
+
+
+  public static function CurrentTimestampOnChange(): Expression
+  {
+    return new Expression('NULL ON UPDATE CURRENT_TIMESTAMP');
   }
 
 
@@ -173,7 +177,7 @@ class Driver
 
     if (isset($columnAction->default)) {
       if ($columnAction->default instanceof Expression) {
-        $sql .= " DEFAULT ({$columnAction->default->statement})";
+        $sql .= " DEFAULT {$columnAction->default->statement}";
       } else {
         $defaultType = get_debug_type($columnAction->default);
         $defaultValue = $columnAction->default;

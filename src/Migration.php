@@ -9,6 +9,7 @@ use Lawondyss\DeGiulietta\Table\DropTableAction;
 use Lawondyss\DeGiulietta\Table\RenameTableAction;
 use Lawondyss\DeGiulietta\Table\Table;
 use Lawondyss\DeGiulietta\Table\TruncateTableAction;
+use PDO;
 
 abstract class Migration
 {
@@ -20,6 +21,12 @@ abstract class Migration
   ) {
     $this->tables = new Actions;
   }
+
+
+  abstract public function up(): void;
+
+
+  abstract public function down(): void;
 
 
   public function createTable(
@@ -118,10 +125,10 @@ abstract class Migration
   }
 
 
-  protected function migrate(): void
+  public function migrate(PDO $pdo): void
   {
     foreach ($this->tablesStatements() as $statement) {
-      dump($statement);
+      $pdo->exec($statement);
     }
   }
 

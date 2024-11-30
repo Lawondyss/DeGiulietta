@@ -36,7 +36,7 @@ class Table
   /** @var Actions<ForeignKeyAction> */
   public readonly Actions $foreignKeys;
 
-  private bool $isCreate;
+  public readonly bool $isCreate;
 
   private ?bool $hasPrimary;
 

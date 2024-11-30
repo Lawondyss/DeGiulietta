@@ -9,15 +9,18 @@ use function mb_strlen;
 
 class Helpers
 {
-  public const VAR_TYPE_STRING = 'string';
-  public const VAR_TYPE_INT = 'int';
-  public const VAR_TYPE_FLOAT = 'float';
-  public const VAR_TYPE_BOOL = 'bool';
-  public const VAR_TYPE_ALLOWED = [
+  public const string VAR_TYPE_STRING = 'string';
+  public const string VAR_TYPE_INT = 'int';
+  public const string VAR_TYPE_FLOAT = 'float';
+  public const string VAR_TYPE_BOOL = 'bool';
+
+  public const string VAR_TYPE_NULL = 'null';
+  public const array VAR_TYPE_ALLOWED = [
     self::VAR_TYPE_STRING,
     self::VAR_TYPE_INT,
     self::VAR_TYPE_FLOAT,
     self::VAR_TYPE_BOOL,
+    self::VAR_TYPE_NULL,
   ];
 
 
