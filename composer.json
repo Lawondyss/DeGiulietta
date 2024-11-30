@@ -2,7 +2,16 @@
   "name": "lawondyss/de-giulietta",
   "description": "PHP tool for MySQL migrations",
   "type": "library",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "keywords": [
+    "degiulietta",
+    "degita",
+    "migrations",
+    "database",
+    "db",
+    "database migrations",
+    "php"
+  ],
   "license": "MIT",
   "authors": [
     {
@@ -11,7 +20,8 @@
     }
   ],
   "require": {
-    "php": "^8.2"
+    "php": "^8.4",
+    "ext-pdo": "*"
   },
   "require-dev": {
     "nette/tester": "^2.5",
@@ -21,5 +31,8 @@
     "psr-4": {
       "Lawondyss\\DeGiulietta\\": "src/"
     }
-  }
+  },
+  "bin": [
+    "bin/degita"
+  ]
 }

@@ -1,0 +1,113 @@
+#!/usr/bin/env php
+<?php
+
+use Lawondyss\DeGiulietta\CLI\CliParams;
+use Lawondyss\DeGiulietta\CLI\Colors;
+use Lawondyss\DeGiulietta\CLI\Command\Clean;
+use Lawondyss\DeGiulietta\CLI\Command\Create;
+use Lawondyss\DeGiulietta\CLI\Command\Initialize;
+use Lawondyss\DeGiulietta\CLI\Command\Migrate;
+use Lawondyss\DeGiulietta\CLI\Command\Rollback;
+use Lawondyss\DeGiulietta\CLI\Command\Status;
+use Lawondyss\DeGiulietta\CLI\Helper;
+use Lawondyss\DeGiulietta\CLI\Migrations;
+use Lawondyss\DeGiulietta\CLI\Printer;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+
+final readonly class Commands
+{
+  public function __construct(
+    /** @var object{directory: string, table: string, dsn: string, user: string, pass: string} */
+    private object $config,
+    private CliParams $cliParams,
+  ) {}
+
+
+  public function status(): void
+  {
+    new Status($this->cliParams, $this->migrations());
+  }
+
+
+  public function create(): void
+  {
+    new Create($this->cliParams, $this->migrations());
+  }
+
+
+  public function migrate(): void
+  {
+    new Migrate($this->cliParams, $this->migrations());
+  }
+
+
+  public function rollback(): void
+  {
+    new Rollback($this->cliParams, $this->migrations());
+  }
+
+
+  public function clean(): void
+  {
+    new Clean($this->cliParams, $this->migrations());
+  }
+
+
+  private function pdo(): PDO
+  {
+    $pdo = new PDO($this->config->dsn, $this->config->user, $this->config->pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+    return $pdo;
+  }
+
+
+  private function migrations(): Migrations
+  {
+    return new Migrations(dir($this->config->directory), $this->pdo(), $this->config->table);
+  }
+}
+
+
+try {
+  Printer::header();
+  Helper::stopwatch();
+
+  $cliParams = new CliParams($_SERVER['argv']);
+  $command = strtolower($cliParams->next());
+
+  if ($command === 'init') {
+    new Initialize;
+  } else {
+    $configPath = $cliParams->valueOf('c') ?? $cliParams->valueOf('config') ?? './degita.config.php';
+
+    /** @var object{directory: string, table: string, dsn: string, user: string, pass: string} $config */
+    $config = require $configPath;
+    $commands = new Commands($config, $cliParams);
+
+    match ($command) {
+      'status' => $commands->status(),
+      'create' => $commands->create(),
+      'migrate' => $commands->migrate(),
+      'rollback' => $commands->rollback(),
+      'clean' => $commands->clean(),
+      '' => Printer::error('', Printer::help(...)),
+      default => Printer::error("Command '{$command}' not found.", Printer::help(...)),
+    };
+  }
+
+  Printer::writeLn();
+  $totalDuration = Helper::stopwatch();
+  $totalDuration = $totalDuration > 1000
+    ? (round($totalDuration / 1000, 2) . ' s')
+    : "$totalDuration ms";
+  Printer::writeLn(' Done in', Colors::yellow($totalDuration));
+
+  Helper::exitSuccess();
+
+} catch (Throwable $e) {
+  Printer::error($e);
+}
