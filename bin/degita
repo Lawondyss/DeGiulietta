@@ -13,7 +13,7 @@ use Lawondyss\DeGiulietta\CLI\Helper;
 use Lawondyss\DeGiulietta\CLI\Migrations;
 use Lawondyss\DeGiulietta\CLI\Printer;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once $GLOBALS['_composer_autoload_path'] ?? (__DIR__ . '/../vendor/autoload.php');
 
 
 final readonly class Commands
