@@ -21,7 +21,7 @@ readonly class DefineColumnAction extends ColumnAction
     public ActionDefineType $defineType,
     public DataType $dataType,
     public bool $null = false,
-    public string|int|float|Expression|null $default = null,
+    public string|bool|int|float|Expression|null $default = null,
     public bool $autoIncrement = false,
     public ?string $comment = null,
     public ?string $characterSet = null,
@@ -29,9 +29,11 @@ readonly class DefineColumnAction extends ColumnAction
     public bool $first = false,
     public ?string $after = null,
   ) {
-    if (isset($default)) {
+    parent::__construct($name);
+
+    if (isset($this->default)) {
       if ($dataType->allowed->missing(Allowed::Default)) {
-        throw new CannotUse("DEFAULT for {$name} with data type {$dataType->name}");
+        throw new CannotUse("DEFAULT for {$this->name} with data type {$dataType->name}");
       }
 
       if (!$this->default instanceof Expression) {
@@ -64,7 +66,7 @@ readonly class DefineColumnAction extends ColumnAction
     }
 
     if ($autoIncrement && $dataType->allowed->missing(Allowed::AutoIncrement)) {
-      throw CannotUse::withDataType('AUTO_INCREMENT', $name, $dataType);
+      throw CannotUse::withDataType('AUTO_INCREMENT', $this->name, $dataType);
     }
 
     if (isset($this->comment) && Helpers::stringLength($this->comment) > 1_024) {
@@ -72,17 +74,15 @@ readonly class DefineColumnAction extends ColumnAction
     }
 
     if ($characterSet && $dataType->allowed->missing(Allowed::Collation)) {
-      throw CannotUse::withDataType('CHARACTER SET', $name, $dataType);
+      throw CannotUse::withDataType('CHARACTER SET', $this->name, $dataType);
     }
 
     if ($collate && $dataType->allowed->missing(Allowed::Collation)) {
-      throw CannotUse::withDataType('COLLATE', $name, $dataType);
+      throw CannotUse::withDataType('COLLATE', $this->name, $dataType);
     }
 
     if ($first && isset($after)) {
-      throw new CannotUse("FIRST and AFTER for {$name} in the same time");
+      throw new CannotUse("FIRST and AFTER for {$this->name} in the same time");
     }
-
-    parent::__construct($name);
   }
 }
