@@ -44,7 +44,7 @@ final readonly class Migrations
     foreach ($this->files() as $filepath) {
       $class = basename($filepath, '.php');
       [$id, $name] = explode('_', $class, 2);
-      $migrations[$id] = new Migration(State::Wait, $id, $name, $filepath);
+      $migrations[$id] = new Migration(State::Wait, $id, $name, filepath: $filepath);
     }
 
     $result = $this->pdo->query("SELECT * FROM {$this->table}");
