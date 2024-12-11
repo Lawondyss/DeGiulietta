@@ -60,7 +60,7 @@ readonly class DefineColumnAction extends ColumnAction
         $defaultType = Helpers::getVarType($default);
 
         if ($defaultType !== $dataType->defaultType) {
-          throw new InvalidArgument("DEFAULT must be {$dataType->defaultType}, given {$defaultType}");
+          throw new InvalidArgument("DEFAULT for {$this->name} must be {$dataType->defaultType}, given {$defaultType}");
         }
       }
     }
